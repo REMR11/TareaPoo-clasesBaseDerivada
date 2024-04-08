@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * 
+ */
 public class Biblioteca {
 	private List<Libro> libros;
 
@@ -78,6 +81,20 @@ public class Biblioteca {
 		return librosEncontrados;
 	}
 
+	/**
+	 * Verifica si el listado proporcionado esta vacio
+	 * @param Libros
+	 * @param mensaje que se mostrara en caso de tener una lista vacia
+	 */
+	public void isEmptyBiblioteca(ArrayList<Libro>Libros, String mensaje) {
+		if (libros.isEmpty()) {
+			System.out.println(mensaje);
+		} else {
+			System.out.println(libros);
+		}
+		
+	}
+	
 	@Override
 	public String toString() {
 		return "Biblioteca [libros=" + libros.toString() + "]";
