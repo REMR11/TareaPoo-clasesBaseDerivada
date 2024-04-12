@@ -22,3 +22,21 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
+
+# Eclipse-specific files
+.classpath
+.project
+.settings/
+.metadata/
+
+# IDE-specific files
+.settings/
+.metadata/
+
+# Operating system-specific files
+.DS_Store
+Thumbs.db
+
+# Build system-specific files
+target/
+build/
