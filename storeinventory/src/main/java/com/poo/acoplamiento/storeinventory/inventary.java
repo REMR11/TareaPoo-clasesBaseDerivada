@@ -2,6 +2,7 @@
 package com.poo.acoplamiento.storeinventory;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
@@ -137,25 +138,54 @@ public class inventary {
 		}
 	}
 
+	/**
+	 * Metodo principal de clase inventary, verifica la exitencia del producto,
+	 * muestra productos disponibles, y actualiza stock del producto
+	 * 
+	 * @param sc variable de escanner
+	 * @throws InputMismatchException Si la entrada del usuario no es un valor
+	 *                                valido
+	 * @throws NullPointerException   Si el codigo proporcionado por el usuario no
+	 *                                es un valor valido
+	
+	 */
 	public void productSales(Scanner sc) {
 		ArrayList<Producto> productoLista = getAvaibleProduct();
 		int respuesta, cantidad;
 		String codigoProducto;
 		System.out.println("Lista de productos disponibles");
 		System.out.println(productoLista.toString());
-		System.out.println("Deseas comparar algo? (1)SI / (0)No");
-		respuesta = sc.nextInt();
+		System.out.println("Deseas comprar algo? (1)SI / (0)No");
+		try {
+			respuesta = sc.nextInt();
+		} catch (InputMismatchException e) {
+			System.out.println("Error: Ingrese un numero valido");
+			return;
+		}
 
 		if (respuesta == 1) {
 			System.out.println("Proporciona codigo del producto que deseas comprar");
-			codigoProducto = sc.nextLine();
+			try {
+				codigoProducto = sc.nextLine();
+			} catch (NullPointerException e) {
+				System.out.println("Error: No se proporciono un codigo de producto");
+				return;
+			}
 
 			if (containsProducto(codigoProducto)) {
 				System.out.println("Cuantas unidades deseas comprar?");
-				cantidad = sc.nextInt();
-
+				try {
+					cantidad = sc.nextInt();
+				} catch (InputMismatchException e) {
+					System.out.println("Error: Ingrese un numero valido");
+					return;
+				}
+				Producto producto = new Producto(null, codigoProducto, 0.0f, cantidad);
+				boolean result = (updateProduct(producto));
+				System.out.println(result ? "Venta exitosa" : "Problemas al vender producto");
+			} else {
+				System.out.println("Producto no encontrado");
 			}
 		}
-
 	}
 }
