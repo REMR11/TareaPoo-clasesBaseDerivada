@@ -11,6 +11,9 @@ import java.util.Scanner;
  * 
  * @author remr1e
  */
+/**
+ * 
+ */
 public class inventary {
 	private ArrayList<Producto> productos;
 
@@ -26,6 +29,7 @@ public class inventary {
 	 * @return booleano que verifica el exito de la operacion, en caso de agregar un
 	 *         nuevo producto devolvera true, en caso de no poder agregarlo false y
 	 *         la excepcion que captura el error
+	 * @throws Exception Si no es posible Agregar un nuevo producto a la lista
 	 */
 	public boolean addproduct(Producto pProducto) {
 		try {
@@ -46,6 +50,7 @@ public class inventary {
 	 * @return booleano que se encarga de verificar el exito del metodo, en caso de
 	 *         encontrar el producto y es modificado con exito devolvera true, caso
 	 *         contrario false y la excepcion que captura el error
+	 * @throws Exception Si no es posible actualizar un producto
 	 */
 	public boolean updateProduct(Producto pProducto) {
 		try {
@@ -82,7 +87,7 @@ public class inventary {
 	 * 
 	 * @return lista de productos disponibles, en caso de no encontrar productos
 	 *         disponibles retornara una lista vacia
-	 * 
+	 * @throws Exception Si existe problemas al agregar un producto a la lista
 	 */
 	public ArrayList<Producto> getAvaibleProduct() {
 		ArrayList<Producto> avaibleProducts = new ArrayList<Producto>();
@@ -100,13 +105,14 @@ public class inventary {
 	}
 
 	/**
-	 * Metodo encargado de buscar en unproducto que coincida con algun codigo en la
+	 * Metodo encargado de buscar en un producto que coincida con algun codigo en la
 	 * lista
 	 * 
 	 * @param pProductos
 	 * @param pProducto
 	 * @return producto que coincide con la busqueda, en caso de no encontrar
 	 *         coincidencias retornara nulo y la excepcion que captura el error
+	 * @throws Exception Si el producto no es encontrado
 	 */
 	public Producto searchProduct(Producto pProducto) {
 		try {
@@ -124,12 +130,13 @@ public class inventary {
 	/**
 	 * Metodo que se encarga de verifiacar si el codigo de producto ingresado exista
 	 * 
-	 * @param pCodigo
+	 * @param pCodigo String que es utilizado para buscar el producto
 	 * @return booleano que verifica su existencia, en caso de ser encontrado
 	 *         devolvera true, caso contrario devolvera false y la excepcion que
 	 *         captura el error
+	 * @throws Exception Si el producto no es encontrado        
 	 */
-	public boolean containsProducto(String pCodigo) {
+	private boolean containsProducto(String pCodigo) {
 		try {
 			return productos.contains(new Producto(null, pCodigo, 0.0f, 0));
 		} catch (Exception e) {
