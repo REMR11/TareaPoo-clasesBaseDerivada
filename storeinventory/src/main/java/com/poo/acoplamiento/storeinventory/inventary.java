@@ -1,4 +1,3 @@
-
 package com.poo.acoplamiento.storeinventory;
 
 import java.util.ArrayList;
@@ -9,9 +8,7 @@ import java.util.Scanner;
  * La clase inventary implementa la logica necesaria para manipular todo lo
  * correspondiente a la clase producto {@link Producto}
  * 
- * @author remr1e
- */
-/**
+ * @author remr1
  * 
  */
 public class inventary {
@@ -70,16 +67,32 @@ public class inventary {
 	 * caso de que alguna propiedad del producto que se quiere actualizar sea nulo,
 	 * se dejara el valor por defecto, asegurandonos de no tener nulos en el
 	 * producto
-	 * 
+	 *
 	 * @param existingProduct
 	 * @param newProduct
+	 * @throws IllegalArgumentException Si el valor es menor que cero
+	 * @throws NumberFormatException    Si el valor proporcionado no es un numero
+	 *                                  valido
 	 */
 	private void updateProductProperties(Producto existingProduct, Producto newProduct) {
+		try {
+			float precio = newProduct.getPrecio();
+			if (precio < 0) {
+				throw new IllegalArgumentException("El precio no puede ser menor a 0");
+			}
+			existingProduct.setPrecio(precio);
+		} catch (NumberFormatException e) {
+			System.out.println("Error: El precio no es un numero valido");
+		}
+
 		existingProduct
 				.setNombre(newProduct.getNombre() != null ? newProduct.getNombre() : existingProduct.getNombre());
-		existingProduct
-				.setPrecio(newProduct.getPrecio() != 0.0f ? newProduct.getPrecio() : existingProduct.getPrecio());
-		existingProduct.setStock(newProduct.getStock() != 0 ? newProduct.getStock() : existingProduct.getStock());
+
+		int stock = newProduct.getStock();
+		if (stock < 0) {
+			throw new IllegalArgumentException("El stock no puede ser menor a 0");
+		}
+		existingProduct.setStock(stock);
 	}
 
 	/**
@@ -134,9 +147,9 @@ public class inventary {
 	 * @return booleano que verifica su existencia, en caso de ser encontrado
 	 *         devolvera true, caso contrario devolvera false y la excepcion que
 	 *         captura el error
-	 * @throws Exception Si el producto no es encontrado        
+	 * @throws Exception Si el producto no es encontrado
 	 */
-	private boolean containsProducto(String pCodigo) {
+	public boolean containsProducto(String pCodigo) {
 		try {
 			return productos.contains(new Producto(null, pCodigo, 0.0f, 0));
 		} catch (Exception e) {
@@ -154,45 +167,19 @@ public class inventary {
 	 *                                valido
 	 * @throws NullPointerException   Si el codigo proporcionado por el usuario no
 	 *                                es un valor valido
-	
+	 * 
 	 */
-	public void productSales(Scanner sc) {
+	public void productSales(String codigoProducto, int cantidad) {
 		ArrayList<Producto> productoLista = getAvaibleProduct();
-		int respuesta, cantidad;
-		String codigoProducto;
+
 		System.out.println("Lista de productos disponibles");
 		System.out.println(productoLista.toString());
-		System.out.println("Deseas comprar algo? (1)SI / (0)No");
-		try {
-			respuesta = sc.nextInt();
-		} catch (InputMismatchException e) {
-			System.out.println("Error: Ingrese un numero valido");
-			return;
-		}
-
-		if (respuesta == 1) {
-			System.out.println("Proporciona codigo del producto que deseas comprar");
-			try {
-				codigoProducto = sc.nextLine();
-			} catch (NullPointerException e) {
-				System.out.println("Error: No se proporciono un codigo de producto");
-				return;
-			}
-
-			if (containsProducto(codigoProducto)) {
-				System.out.println("Cuantas unidades deseas comprar?");
-				try {
-					cantidad = sc.nextInt();
-				} catch (InputMismatchException e) {
-					System.out.println("Error: Ingrese un numero valido");
-					return;
-				}
-				Producto producto = new Producto(null, codigoProducto, 0.0f, cantidad);
-				boolean result = (updateProduct(producto));
-				System.out.println(result ? "Venta exitosa" : "Problemas al vender producto");
-			} else {
-				System.out.println("Producto no encontrado");
-			}
+		if (containsProducto(codigoProducto)) {
+			Producto producto = new Producto(null, codigoProducto, 0.0f, cantidad);
+			boolean result = (updateProduct(producto));
+			System.out.println(result ? "Venta exitosa" : "Problemas al vender producto");
+		} else {
+			System.out.println("Producto no encontrado");
 		}
 	}
 }
