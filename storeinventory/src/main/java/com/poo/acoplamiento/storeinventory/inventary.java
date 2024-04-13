@@ -1,12 +1,14 @@
-/**
- * 
- */
+
 package com.poo.acoplamiento.storeinventory;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
+ * La clase inventary implementa la logica necesaria para manipular todo lo
+ * correspondiente a la clase producto {@link Producto}
  * 
+ * @author remr1e
  */
 public class inventary {
 	private ArrayList<Producto> productos;
@@ -20,12 +22,18 @@ public class inventary {
 	 * Metodo Encargado de agrega un nuevo producto a la lista
 	 * 
 	 * @param pProducto
-	 * @return booleano que verifica el exito de la operacion
+	 * @return booleano que verifica el exito de la operacion, en caso de agregar un
+	 *         nuevo producto devolvera true, en caso de no poder agregarlo false y
+	 *         la excepcion que captura el error
 	 */
 	public boolean addproduct(Producto pProducto) {
-		if (containsProducto(pProducto.getCodigo())) {
-			this.productos.add(pProducto);
-			return true;
+		try {
+			if (containsProducto(pProducto.getCodigo())) {
+				this.productos.add(pProducto);
+				return true;
+			}
+		} catch (Exception e) {
+			System.out.println("Error al agregar el producto: " + e.getMessage());
 		}
 		return false;
 	}
@@ -74,13 +82,18 @@ public class inventary {
 	 * 
 	 * @param pProductos
 	 * @param pProducto
-	 * @return producto que coincide con la busqueda
+	 * @return producto que coincide con la busqueda, en caso de no encontrar
+	 *         coincidencias retornara nulo y la excepcion que captura el error
 	 */
 	public Producto searchProduct(Producto pProducto) {
-		for (Producto producto : productos) {
-			if (producto.getCodigo().equals(pProducto.getCodigo())) {
-				return producto;
+		try {
+			for (Producto producto : productos) {
+				if (producto.getCodigo().equals(pProducto.getCodigo())) {
+					return producto;
+				}
 			}
+		} catch (Exception e) {
+			System.out.println("Error al buscar el producto: " + e.getMessage());
 		}
 		return null;
 	}
