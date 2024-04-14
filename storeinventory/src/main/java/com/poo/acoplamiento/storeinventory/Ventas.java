@@ -9,6 +9,8 @@ import java.util.Scanner;
 /**
  * Clase ventas implementa la logica necesaria para manipular la clase inventary
  * {@link inventary}
+ *  * 
+ * Se utiliza clase validaciones para el ingreso de datos {@link Validaciones}
  * 
  * @author remr1
  * 
@@ -38,11 +40,9 @@ public class Ventas {
 //		
 //		if (respuesta == 1) {}
 		try {
-			System.out.println("Proporciona codigo del producto que deseas comprar");
-
 			try {
 
-				codigoProducto = sc.nextLine();
+				codigoProducto = Validaciones.solicitarYValidarString(sc, "codigo");
 				inventary auxInventary = new inventary();
 				auxProducto = auxInventary.searchProduct(codigoProducto);
 
@@ -52,11 +52,9 @@ public class Ventas {
 
 			}
 
-			System.out.println("Cuantas unidades deseas comprar?");
-
 			try {
 
-				cantidad = sc.nextInt();
+				cantidad = Validaciones.solicitarIntEnRango(sc, "unidades", 0, auxProducto.getStock());
 
 			} catch (InputMismatchException e) {
 

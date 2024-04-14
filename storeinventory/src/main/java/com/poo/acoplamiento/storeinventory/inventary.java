@@ -7,6 +7,7 @@ import java.util.Scanner;
 /**
  * La clase inventary implementa la logica necesaria para manipular todo lo
  * correspondiente a la clase producto {@link Producto}
+
  * 
  * @author remr1
  * 
@@ -70,7 +71,7 @@ public class inventary {
 	 *
 	 * @param existingProduct
 	 * @param newProduct
-	 * @throws IllegalArgumentException Si el valor es menor que cero
+	 * @throws IllegalArgumentException Si el valor es menor que cero o mayor al stock
 	 * @throws NumberFormatException    Si el valor proporcionado no es un numero
 	 *                                  valido
 	 */
@@ -91,6 +92,8 @@ public class inventary {
 		int stock = newProduct.getStock();
 		if (stock < 0) {
 			throw new IllegalArgumentException("El stock no puede ser menor a 0");
+		}else if(stock > existingProduct.getStock()) {
+			throw new IllegalArgumentException("El stock no puede ser mayor que el stock actual");
 		}
 		existingProduct.setStock(stock);
 	}
