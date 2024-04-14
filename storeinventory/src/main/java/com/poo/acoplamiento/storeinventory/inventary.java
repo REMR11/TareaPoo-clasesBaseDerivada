@@ -51,7 +51,7 @@ public class inventary {
 	 */
 	public boolean updateProduct(Producto pProducto) {
 		try {
-			Producto producto = searchProduct(pProducto);
+			Producto producto = searchProduct(pProducto.getCodigo());
 			if (producto != null) {
 				updateProductProperties(producto, pProducto);
 				return true;
@@ -127,10 +127,10 @@ public class inventary {
 	 *         coincidencias retornara nulo y la excepcion que captura el error
 	 * @throws Exception Si el producto no es encontrado
 	 */
-	public Producto searchProduct(Producto pProducto) {
+	public Producto searchProduct(String pCodigo) {
 		try {
 			for (Producto producto : productos) {
-				if (producto.getCodigo().equals(pProducto.getCodigo())) {
+				if (producto.getCodigo().equals(pCodigo)) {
 					return producto;
 				}
 			}
